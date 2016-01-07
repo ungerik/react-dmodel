@@ -1,7 +1,7 @@
 import React from "react";
 
 import DataType from "./DataType";
-import { assignData } from ".";
+import { assignData } from "./functions";
 
 
 export default class DataModel extends DataType {

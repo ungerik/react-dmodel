@@ -1,7 +1,6 @@
 {
   "name": "react-dmodel",
   "description": "Exploit JSX syntax to define data models and auto generate form UI for it",
-  "main": "index.js",
   "authors": [
     "Erik Unger <erik@erikunger.com>"
   ],
