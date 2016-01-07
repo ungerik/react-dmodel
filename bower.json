@@ -1,0 +1,25 @@
+{
+  "name": "react-dmodel",
+  "description": "Exploit JSX syntax to define data models and auto generate form UI for it",
+  "main": "index.js",
+  "authors": [
+    "Erik Unger <erik@erikunger.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "forms",
+    "struct",
+    "data-model",
+    "encoding"
+  ],
+  "homepage": "https://github.com/ungerik/react-dmodel",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
