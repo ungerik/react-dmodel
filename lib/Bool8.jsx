@@ -1,3 +1,4 @@
+import React from "react";
 import Bool from "./Bool";
 import { encodeValue, decodeValue, byteLengthFunc } from "./encoding";
 
