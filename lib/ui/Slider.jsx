@@ -13,14 +13,15 @@ export default class Slider extends React.Component {
 		height: dmodelPropTypes.validNumber,
 		min: dmodelPropTypes.minMax,
 		max: dmodelPropTypes.minMax,
-		value:  React.PropTypes.number,
+		value: React.PropTypes.number,
 		integer: React.PropTypes.bool,
 		ticks: React.PropTypes.bool,
-		tickDistance: dmodelPropTypes.validNumber,
+		tickSpacing: dmodelPropTypes.validNumber,
 		snapToTicks: React.PropTypes.bool,
 		tickLabels: React.PropTypes.bool,
 		labelFont: React.PropTypes.string,
 		labelSize: dmodelPropTypes.validNumber,
+		labelDecimals: React.PropTypes.number,
 		unit: React.PropTypes.string,
 		sliderColor: React.PropTypes.string,
 		backgroundColor: React.PropTypes.string,
@@ -34,13 +35,14 @@ export default class Slider extends React.Component {
 		value: 0,
 		integer: false,
 		ticks: true,
-		tickDistance: 10,
+		tickSpacing: 10,
 		snapToTicks: false,
 		tickLabels: true,
-		labelFont: `"Lucida Console", Monaco, monospace`,
-		labelSize: 16,
+		labelFont: `"Helvetica Neue", Helvetica, Arial, sans-serif`,
+		labelSize: 20,
+		labelDecimals: NaN,
 		unit: "",
-		sliderColor: "#666",
+		sliderColor: "#337ab7",
 		backgroundColor: "#F0F0F0",
 		onChange: null
 	};
@@ -89,7 +91,7 @@ export default class Slider extends React.Component {
 	}
 
 	render() {
-		const { width, height, min, max, value, /*ticks, tickDistance,*/ tickLabels, labelFont, labelSize, unit, sliderColor, backgroundColor } = this.props;
+		const { width, height, min, max, value, ticks, tickSpacing, tickLabels, labelFont, labelSize, labelDecimals, unit, sliderColor, backgroundColor } = this.props;
 
 		const sliderWidth = height * 0.5;
 		const halfSliderWidth = sliderWidth * 0.5;
@@ -101,6 +103,16 @@ export default class Slider extends React.Component {
 		}
 
 		const slidingWidth = width - sliderWidth;
+
+		function valueToX(v) {
+			return (v - min) / (max - min) * slidingWidth;
+		}
+
+		const sliderX = isNaN(value) ? 0 : valueToX(value);
+
+		const tickHeight = labelSize * 0.2;
+		const tickMargin = labelSize * 0.1;
+		const fontSize = labelSize * 0.7;
 
 		const shaftStyle = {
 			width: sliderWidth,
@@ -116,22 +128,49 @@ export default class Slider extends React.Component {
 			borderRight: `${halfSliderWidth}px solid transparent`,
 		};
 
-		const sliderX = isNaN(value) ? 0 : (value - min) / (max - min) * slidingWidth;
+		const labelWrapperStyle = {
+			position: "absolute",
+			zIndex: 1,
+			top: 0,
+			height: fontSize,
+			fontFamily: labelFont,
+			fontSize: fontSize,
+			lineHeight: `${fontSize}px`,
+			textAlign: "center",
+		};
+
+		const tickStyle = {
+			width: 0,
+			height: tickHeight,
+			borderLeft: "1px solid black",
+			borderRight: "1px solid black",
+			margin: `0 auto ${tickMargin}px`,
+		};
+
+		var labels = null;
+		if (ticks) {
+			labels = [];
+			const width = slidingWidth / ((max - min) / tickSpacing);
+			for (let v = min; v <= max; v += tickSpacing) {
+				const left = halfSliderWidth - width * 0.5 + valueToX(v);
+				const div = (
+					<div key={"val" + v} style={{...labelWrapperStyle, left, width}}>
+						<div style={tickStyle}></div>
+						<div>{isFinite(labelDecimals) ? v.toFixed(labelDecimals) : v}{unit}</div>
+					</div>
+				);
+				labels.push(div);
+			}
+		}
 
 		return (
-			<div ref="wrapper" className="dmodel-slider-wrapper" style={{width, height: totalHeight, position: "relative"}}>
+			<div ref="wrapper" className="dmodel-slider-wrapper" style={{position: "relative", width, height: totalHeight}}>
 				<div className="dmodel-slider-background" style={{position: "relative", width: slidingWidth, height, left: halfSliderWidth, backgroundColor}}></div>
-				<div ref="slider" className="dmodel-slider" style={{position: "absolute", zIndex: 10, top: 0, left: sliderX, height, cursor: "col-resize"}}>
+				<div ref="slider" className="dmodel-slider" style={{position: "absolute", zIndex: 1, top: 0, left: sliderX, height, cursor: "col-resize"}}>
 					<div style={shaftStyle}></div>
 					<div style={arrowStyle}></div>
 				</div>
-				{tickLabels ?
-					<div className="dmodel-slider-labels" style={{width, height: labelSize}}>
-
-					</div>
-				:
-					null
-				}
+				{labels ? <div className="dmodel-slider-labels" style={{position: "relative", width, height: labelSize}}>{labels}</div> : null}
 			</div>
 		);
 	}
