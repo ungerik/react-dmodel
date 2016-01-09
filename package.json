@@ -43,7 +43,7 @@
 	"webpack": "^1.12.9",
     "bower": "^1.7.2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react-bootstrap": "^0.28.1",
     "react": "^0.14.6"
   }
