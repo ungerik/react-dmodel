@@ -72,13 +72,15 @@ export default class Slider extends React.Component {
 			})
 			.on("dragend", event => {
 				slider.style.transform = "";
-				const { width, height, min, max, value, integer, onChange } = this.props;
+				const { width, height, min, max, value, integer, tickSpacing, snapToTicks, onChange } = this.props;
 				const sliderWidth = height * 0.5;
 				const slidingWidth = width - sliderWidth;
 				const dx = event.clientX - event.clientX0;
 				const lastValue = isNaN(value) ? min : value;
 				let newValue = lastValue + dx / slidingWidth * (max - min);
-				if (integer) {
+				if (snapToTicks) {
+					newValue = Math.round((newValue - min) / tickSpacing) * tickSpacing + min;
+				} else if (integer) {
 					newValue = Math.round(newValue);
 				}
 				newValue = Math.min(max, newValue);
