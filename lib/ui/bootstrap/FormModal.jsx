@@ -15,6 +15,7 @@ export default class FormModal extends DataModel {
 		dialogClassName: PropTypes.string,
 		show: PropTypes.bool.isRequired,
 		title: PropTypes.string,
+
 		onCancel: PropTypes.func.isRequired,
 		cancelText: PropTypes.string,
 		onSave: PropTypes.func.isRequired,
@@ -40,8 +41,8 @@ export default class FormModal extends DataModel {
 		const { onCancel, onSave } = this.props;
 		const mappedChildren = super.render();
 		return (
-			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={() => onCancel()}>
-				<Modal.Header closeButton>
+			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={() => {}}>
+				<Modal.Header>
 					{title ? <Modal.Title>{title}</Modal.Title> : null}
 				</Modal.Header>
 				<Modal.Body>
