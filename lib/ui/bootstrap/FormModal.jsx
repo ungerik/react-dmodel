@@ -74,15 +74,26 @@ export default class FormModal extends DataModel {
 	}
 
 	onRef(ref) {
-		if (ref) {
-			this.inputRefs.push(ref);
+		if (!ref) {
+			return;
+		}
+		this.inputRefs.push(ref);
 
-			const next = this.inputRefs.length;
-			ref.onKeyUp = event => {
-				if (event.keyCode === 13 && next < this.inputRefs.length) {
-					this.focusRefInput(this.inputRefs[next]);
-				}
-			};
+		const nextInputIndex = this.inputRefs.length;
+		ref.onKeyUp = event => {
+			if (event.keyCode === 13) {
+				this.onEnterReleased(nextInputIndex);
+			}
+		};
+	}
+
+	onEnterReleased(nextInputIndex) {
+		if (nextInputIndex < this.inputRefs.length) {
+			this.focusRefInput(this.inputRefs[nextInputIndex]);
+		} else if (nextInputIndex === this.inputRefs.length) {
+			if (this.validate() === null) {
+				this.props.onSave(this.state);
+			}
 		}
 	}
 
