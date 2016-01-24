@@ -25,7 +25,7 @@ export default class Bool extends DataType {
 		style: {},
 	};
 
-	static checkValue(value) {
+	static validate(value) {
 		if (typeof value !== "boolean") {
 			return new TypeError("Value must be a boolean, but is of type " + typeof value);
 		}

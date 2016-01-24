@@ -21,8 +21,8 @@ export default class Uint8 extends Uint {
 		encoding: "binary",
 	}
 
-	static checkValue(value, props) {
-		const error = Uint.checkValue(value, props);
+	static validate(value, props) {
+		const error = Uint.validate(value, props);
 		if (error) {
 			return error;
 		}

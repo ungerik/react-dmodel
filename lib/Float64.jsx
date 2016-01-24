@@ -22,8 +22,8 @@ export default class Float64 extends Float {
 		encoding: "binary",
 	}
 
-	static checkValue(value, props) {
-		const error = Float.checkValue(value, props);
+	static validate(value, props) {
+		const error = Float.validate(value, props);
 		if (error) {
 			return error;
 		}

@@ -30,7 +30,7 @@ export default class Float extends DataType {
 		style: {},
 	};
 
-	static checkValue(value, props) {
+	static validate(value, props) {
 		if (typeof value !== "number") {
 			return new TypeError("Value must be a number, but is of type " + typeof value);
 		}

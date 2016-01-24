@@ -24,7 +24,7 @@ export default class Enum extends DataType {
 		style: {},
 	};
 
-	static checkValue(value, props) {
+	static validate(value, props) {
 		for (const option of props.options) {
 			if (value === option) {
 				return null;

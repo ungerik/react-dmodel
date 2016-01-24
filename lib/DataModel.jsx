@@ -1,7 +1,7 @@
 import React from "react";
 
 import DataType from "./DataType";
-import { assignData } from "./utils";
+import { assignData, forEachChildElementRecursive } from "./utils";
 
 
 export default class DataModel extends DataType {
@@ -32,6 +32,15 @@ export default class DataModel extends DataType {
 		if (nextProps.data) {
 			this.setState(assignData(this, nextProps.data));
 		}
+	}
+
+	validate() {
+		let error = null;
+		forEachChildElementRecursive(this, ({ type, props }) => {
+			error = type.validate(this.getValue(props.name), props);
+			return !!error;
+		});
+		return error;
 	}
 
 	getValue(name) {

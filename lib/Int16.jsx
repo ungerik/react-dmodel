@@ -21,8 +21,8 @@ export default class Int16 extends Int {
 		encoding: "binary",
 	}
 
-	static checkValue(value, props) {
-		const error = Int.checkValue(value, props);
+	static validate(value, props) {
+		const error = Int.validate(value, props);
 		if (error) {
 			return error;
 		}

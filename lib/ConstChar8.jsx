@@ -11,7 +11,7 @@ export default class ConstChar8 extends Char8 {
 		defaultValue: React.PropTypes.string.isRequired,
 	};
 
-	static checkValue(value, props) {
+	static validate(value, props) {
 		if (typeof value !== "string") {
 			return new TypeError("Value must be a string, but is of type " + typeof value);
 		}

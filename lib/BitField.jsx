@@ -17,7 +17,7 @@ export default class BitField extends DataType {
 		style: {},
 	};
 
-	static checkValue(value, props) {
+	static validate(value, props) {
 		return null;
 	}
 }

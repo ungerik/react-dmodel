@@ -31,7 +31,7 @@ export default class Char8 extends DataType {
 		return str;
 	}
 
-	static checkValue(value, props) {
+	static validate(value, props) {
 		if (typeof value !== "string") {
 			return new TypeError("Value must be a string, but is of type " + typeof value);
 		}

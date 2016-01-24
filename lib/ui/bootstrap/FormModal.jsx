@@ -21,9 +21,10 @@ export default class FormModal extends DataModel {
 		cancelText: PropTypes.string,
 		onSave: PropTypes.func.isRequired,
 		saveText: PropTypes.string,
-		data: PropTypes.object.isRequired,
+		data: PropTypes.object,
 		mapFunc: PropTypes.func,
 		style: React.PropTypes.object,
+		focusFirstInput: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -32,8 +33,10 @@ export default class FormModal extends DataModel {
 		dialogClassName: "",
 		cancelText: "Cancel",
 		saveText: "Save",
+		data: {},
 		mapFunc: mapDefault,
 		style: {},
+		focusFirstInput: true,
 	};
 
 	inputRefs = [];
@@ -65,7 +68,7 @@ export default class FormModal extends DataModel {
 	}
 
 	onShow() {
-		if (this.inputRefs.length > 0) {
+		if (this.inputRefs.length > 0 && this.props.focusFirstInput) {
 			this.focusRefInput(this.inputRefs[0]);
 		}
 	}
