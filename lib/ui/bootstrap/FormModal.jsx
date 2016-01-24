@@ -91,6 +91,7 @@ export default class FormModal extends DataModel {
 		const { title, cancelText, saveText } = this.props;
 		const { onCancel, onSave } = this.props;
 		const mappedChildren = super.render();
+		const validationError = this.validate();
 		return (
 			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={() => undefined}>
 				<Modal.Header>
@@ -101,7 +102,7 @@ export default class FormModal extends DataModel {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={() => onCancel()}>{cancelText}</Button>
-					<Button bsStyle="primary" onClick={() => onSave(this.state)}>{saveText}</Button>
+					<Button bsStyle="primary" disabled={validationError !== null} onClick={() => onSave(this.state)}>{saveText}</Button>
 				</Modal.Footer>
 			</Modal>
 		);
