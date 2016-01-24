@@ -42,9 +42,12 @@ export default class DataModel extends DataType {
 		this.setState({[name]: value});
 	}
 
+	onRef() {
+	}
+
 	render() {
 		const element = <DataModel {...this.props}>{this.props.children}</DataModel>;
-		return this.props.mapFunc(element, this.getValue, this.setValue);
+		return this.props.mapFunc(element, this.getValue, this.setValue, [], ref => this.onRef(ref));
 	}
 
 }
