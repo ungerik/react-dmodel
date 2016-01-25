@@ -39,7 +39,8 @@ export default class FormModal extends DataModel {
 		focusFirstInput: true,
 	};
 
-	inputRefs = [];
+	inputRefArray = [];
+	inputRefSet = new Set();
 
 	componentDidMount() {
 		if (this.props.show) {
@@ -48,8 +49,9 @@ export default class FormModal extends DataModel {
 	}
 
 	componentWillUpdate(nextProps) {
-		if (nextProps.show !== this.props.show) {
-			this.inputRefs = [];
+		if (nextProps.show && !this.props.show) {
+			this.inputRefArray = [];
+			this.inputRefSet.clear();
 		}
 	}
 
@@ -68,18 +70,21 @@ export default class FormModal extends DataModel {
 	}
 
 	onShow() {
-		if (this.inputRefs.length > 0 && this.props.focusFirstInput) {
-			this.focusRefInput(this.inputRefs[0]);
+		if (this.inputRefArray.length > 0 && this.props.focusFirstInput) {
+			this.focusRefInput(this.inputRefArray[0]);
 		}
 	}
 
 	onRef(ref) {
-		if (!ref) {
+		if (!ref || this.inputRefSet.has(ref)) {
+			// Ignore null or refs we already have
 			return;
 		}
-		this.inputRefs.push(ref);
 
-		const nextInputIndex = this.inputRefs.length;
+		this.inputRefArray.push(ref);
+		this.inputRefSet.add(ref);
+
+		const nextInputIndex = this.inputRefArray.length;
 		ref.onKeyUp = event => {
 			if (event.keyCode === 13) {
 				this.onEnterReleased(nextInputIndex);
@@ -88,9 +93,9 @@ export default class FormModal extends DataModel {
 	}
 
 	onEnterReleased(nextInputIndex) {
-		if (nextInputIndex < this.inputRefs.length) {
-			this.focusRefInput(this.inputRefs[nextInputIndex]);
-		} else if (nextInputIndex === this.inputRefs.length) {
+		if (nextInputIndex < this.inputRefArray.length) {
+			this.focusRefInput(this.inputRefArray[nextInputIndex]);
+		} else if (nextInputIndex === this.inputRefArray.length) {
 			if (this.validate() === null) {
 				this.props.onSave(this.state);
 			}
