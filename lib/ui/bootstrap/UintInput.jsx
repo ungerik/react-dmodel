@@ -16,6 +16,7 @@ export default class UintInput extends BaseUintInput {
 		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
 		disabled: PropTypes.bool,
 		onChange: PropTypes.func,
+		onKeyUp: PropTypes.func,
 		inputClass: PropTypes.string,
 	};
 
@@ -30,6 +31,7 @@ export default class UintInput extends BaseUintInput {
 		bsStyle: null,
 		disabled: false,
 		onChange: null,
+		onKeyUp: null,
 		inputClass: "form-control",
 	};
 

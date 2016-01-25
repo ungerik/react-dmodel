@@ -56,9 +56,12 @@ export default class DataModel extends DataType {
 	onRef() {
 	}
 
+	onKeyUp() {
+	}
+
 	render() {
 		const element = <DataModel {...this.props}>{this.props.children}</DataModel>;
-		return this.props.mapFunc(element, this.getValue, this.setValue, [], ref => this.onRef(ref));
+		return this.props.mapFunc(element, this.getValue, this.setValue, {onKeyUp: event => this.onKeyUp(event)}, [], ref => this.onRef(ref));
 	}
 
 }

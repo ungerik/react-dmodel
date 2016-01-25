@@ -23,6 +23,7 @@ export default class IntInput extends React.Component {
 		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
 		disabled: PropTypes.bool,
 		onChange: PropTypes.func,
+		onKeyUp: PropTypes.func,
 		inputClass: PropTypes.string,
 		labelClass: PropTypes.string,
 		wrapperClass: PropTypes.string,
@@ -37,12 +38,11 @@ export default class IntInput extends React.Component {
 		bsStyle: null,
 		disabled: false,
 		onChange: null,
+		onKeyUp: null,
 		inputClass: null,
 		labelClass: null,
 		wrapperClass: null,
 	};
-
-	onKeyUp = () => undefined;
 
 	onChange(event) {
 		// TODO: handle value not in range of min max. Neets temporary state
@@ -66,7 +66,7 @@ export default class IntInput extends React.Component {
 				title={`Input must be a non-negative integral number from ${this.props.min} to ${this.props.max}`}
 				disabled={this.props.disabled}
 				onChange={event => this.onChange(event)}
-				onKeyUp={event => this.onKeyUp(event)}
+				onKeyUp={event => this.props.onKeyUp ? this.props.onKeyUp(event) : undefined}
 			/>
 		);
 	}

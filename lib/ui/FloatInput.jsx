@@ -65,6 +65,7 @@ export default class FloatInput extends React.Component {
 		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
 		disabled: PropTypes.bool,
 		onChange: PropTypes.func,
+		onKeyUp: PropTypes.func,
 		inputClass: PropTypes.string,
 		labelClass: PropTypes.string,
 		wrapperClass: PropTypes.string,
@@ -82,6 +83,7 @@ export default class FloatInput extends React.Component {
 		bsStyle: null,
 		disabled: false,
 		onChange: null,
+		onKeyUp: null,
 		inputClass: null,
 		labelClass: null,
 		wrapperClass: null,
@@ -89,7 +91,6 @@ export default class FloatInput extends React.Component {
 
 	trailingPoint = false;
 	trailingZeros = 0;
-	onKeyUp = () => undefined;
 
 	onChange(event) {
 		const s = event.target.value;
@@ -148,7 +149,7 @@ export default class FloatInput extends React.Component {
 				title="Input must be a valid floating-point number"
 				disabled={this.props.disabled}
 				onChange={event => this.onChange(event)}
-				onKeyUp={event => this.onKeyUp(event)}
+				onKeyUp={event => this.props.onKeyUp ? this.props.onKeyUp(event) : undefined}
 			/>
 		);
 	}

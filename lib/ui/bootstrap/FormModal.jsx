@@ -1,5 +1,4 @@
 import React, { PropTypes } from "react";
-import ReactDOM from "react-dom";
 import { Modal, Button } from "react-bootstrap";
 
 import DataModel from "../../DataModel";
@@ -40,7 +39,7 @@ export default class FormModal extends DataModel {
 	};
 
 	inputRefArray = [];
-	inputRefSet = new Set();
+	inputRefMap = new Map();
 
 	componentDidMount() {
 		if (this.props.show) {
@@ -51,7 +50,7 @@ export default class FormModal extends DataModel {
 	componentWillUpdate(nextProps) {
 		if (nextProps.show && !this.props.show) {
 			this.inputRefArray = [];
-			this.inputRefSet.clear();
+			this.inputRefMap.clear();
 		}
 	}
 
@@ -61,40 +60,42 @@ export default class FormModal extends DataModel {
 		}
 	}
 
-	focusRefInput(ref) {
-		if (ref.refs.input) {
-			const input = ReactDOM.findDOMNode(ref.refs.input);
-			input.focus();
-			input.scrollIntoView();
-		}
+	focusRefInput(index) {
+		const input = this.inputRefArray[index];
+		input.focus();
+		input.scrollIntoView();
 	}
 
 	onShow() {
 		if (this.inputRefArray.length > 0 && this.props.focusFirstInput) {
-			this.focusRefInput(this.inputRefArray[0]);
+			this.focusRefInput(0);
 		}
 	}
 
 	onRef(ref) {
-		if (!ref || this.inputRefSet.has(ref)) {
+		if (!ref || !ref.refs || this.inputRefMap.has(ref.refs.input)) {
 			// Ignore null or refs we already have
 			return;
 		}
 
-		this.inputRefArray.push(ref);
-		this.inputRefSet.add(ref);
+		const inputIndex = this.inputRefArray.length;
 
-		const nextInputIndex = this.inputRefArray.length;
-		ref.onKeyUp = event => {
-			if (event.keyCode === 13) {
-				this.onEnterReleased(nextInputIndex);
-			}
-		};
+		this.inputRefArray.push(ref.refs.input);
+		this.inputRefMap.set(ref.refs.input, inputIndex);
 	}
 
-	onEnterReleased(nextInputIndex) {
+	onKeyUp(event) {
+		if (event.keyCode !== 13) {
+			return;
+		}
+		const inputIndex = this.inputRefMap.get(event.target);
+		if (inputIndex === undefined) {
+			return;
+		}
+
+		const nextInputIndex = inputIndex + 1;
 		if (nextInputIndex < this.inputRefArray.length) {
-			this.focusRefInput(this.inputRefArray[nextInputIndex]);
+			this.focusRefInput(nextInputIndex);
 		} else if (nextInputIndex === this.inputRefArray.length) {
 			if (this.validate() === null) {
 				this.props.onSave(this.state);
