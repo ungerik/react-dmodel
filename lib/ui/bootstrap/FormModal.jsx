@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Alert } from "react-bootstrap";
 
 import DataModel from "../../DataModel";
 import mapDefault from "./mapDefault";
@@ -27,6 +27,7 @@ export default class FormModal extends DataModel {
 		mapFunc: PropTypes.func,
 		style: React.PropTypes.object,
 		focusFirstInput: PropTypes.bool,
+		showValidationErrors: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -39,6 +40,7 @@ export default class FormModal extends DataModel {
 		mapFunc: mapDefault,
 		style: {},
 		focusFirstInput: true,
+		showValidationErrors: false,
 	};
 
 	inputRefArray = [];
@@ -51,7 +53,7 @@ export default class FormModal extends DataModel {
 		const injectedProps = {
 			onRef: null,
 			onKeyUp: null,
-		}
+		};
 		const onRef = ref => injectedProps.onRef(ref);
 		const onKeyUp = event => injectedProps.onKeyUp(event);
 
@@ -134,17 +136,16 @@ export default class FormModal extends DataModel {
 	}
 
 	render() {
-		const { bsSize, dialogClassName, show} = this.props;
+		const { bsSize, dialogClassName, show, showValidationErrors } = this.props;
 		const { title, cancelText, saveText } = this.props;
 		const mappedChildren = super.render();
 		const validationError = this.validate();
 		return (
 			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={noop}>
-				<Modal.Header>
-					{title ? <Modal.Title>{title}</Modal.Title> : null}
-				</Modal.Header>
+				{title ? <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header> : null}				
 				<Modal.Body>
 					{mappedChildren}
+					{showValidationErrors && validationError ? <Alert bsStyle="danger">{validationError.toString()}</Alert> : null}
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={this.onCancel}>{cancelText}</Button>

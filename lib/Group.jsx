@@ -18,11 +18,4 @@ export default class Group extends DataType {
 		label: null,
 		style: {},
 	};
-
-	static validate(value) {
-		if (typeof value !== "object") {
-			return new Error("Value must be an object, but is of type " + typeof value);
-		}
-		return null;
-	}
 }
