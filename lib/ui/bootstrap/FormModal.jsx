@@ -5,6 +5,10 @@ import DataModel from "../../DataModel";
 import mapDefault from "./mapDefault";
 
 
+function noop() {
+}
+
+
 export default class FormModal extends DataModel {
 	static displayName = "FormModal";
 	static dataModelType = "DataModel";
@@ -110,7 +114,7 @@ export default class FormModal extends DataModel {
 		const mappedChildren = super.render();
 		const validationError = this.validate();
 		return (
-			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={() => undefined}>
+			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={noop}>
 				<Modal.Header>
 					{title ? <Modal.Title>{title}</Modal.Title> : null}
 				</Modal.Header>
