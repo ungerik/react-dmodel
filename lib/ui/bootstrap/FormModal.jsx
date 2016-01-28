@@ -19,7 +19,6 @@ export default class FormModal extends DataModel {
 		dialogClassName: PropTypes.string,
 		show: PropTypes.bool.isRequired,
 		title: PropTypes.string,
-
 		onCancel: PropTypes.func.isRequired,
 		cancelText: PropTypes.string,
 		onSave: PropTypes.func.isRequired,
@@ -44,6 +43,25 @@ export default class FormModal extends DataModel {
 
 	inputRefArray = [];
 	inputRefMap = new Map();
+
+	constructor(props, ...args) {
+		// We can't use this to pass methods to parent props
+		// so create functions that close over injectedProps
+		// and set the methods of injectedProps after the constructor
+		const injectedProps = {
+			onRef: null,
+			onKeyUp: null,
+		}
+		const onRef = ref => injectedProps.onRef(ref);
+		const onKeyUp = event => injectedProps.onKeyUp(event);
+
+		super({...props, onRef, onKeyUp}, ...args);
+
+		this.onSave = this.onSave.bind(this);
+		this.onCancel = this.onCancel.bind(this);
+		injectedProps.onRef = this.onRef.bind(this);
+		injectedProps.onKeyUp= this.onKeyUp.bind(this);
+	}
 
 	componentDidMount() {
 		if (this.props.show) {
@@ -107,10 +125,17 @@ export default class FormModal extends DataModel {
 		}
 	}
 
+	onSave() {
+		this.props.onSave(this.state);
+	}
+
+	onCancel() {
+		this.props.onCancel();
+	}
+
 	render() {
 		const { bsSize, dialogClassName, show} = this.props;
 		const { title, cancelText, saveText } = this.props;
-		const { onCancel, onSave } = this.props;
 		const mappedChildren = super.render();
 		const validationError = this.validate();
 		return (
@@ -122,8 +147,8 @@ export default class FormModal extends DataModel {
 					{mappedChildren}
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={() => onCancel()}>{cancelText}</Button>
-					<Button bsStyle="primary" disabled={validationError !== null} onClick={() => onSave(this.state)}>{saveText}</Button>
+					<Button onClick={this.onCancel}>{cancelText}</Button>
+					<Button bsStyle="primary" disabled={validationError !== null} onClick={this.onSave}>{saveText}</Button>
 				</Modal.Footer>
 			</Modal>
 		);

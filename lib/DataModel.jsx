@@ -13,16 +13,24 @@ export default class DataModel extends DataType {
 		data: React.PropTypes.object,
 		mapFunc: React.PropTypes.func,
 		style: React.PropTypes.object,
+		onRef: React.PropTypes.func,
+		onKeyUp: React.PropTypes.func,
 	};
 
 	static defaultProps = {
 		style: {},
+		onRef: null,
+		onKeyUp: null,
 	};
 
 	constructor(props, ...args) {
 		super(props, ...args);
+
 		this.getValue = this.getValue.bind(this);
 		this.setValue = this.setValue.bind(this);
+		this.onRef = this.onRef.bind(this);
+		this.onKeyUp = this.onKeyUp.bind(this);
+
 		if (props.data) {
 			this.state = assignData(this, props.data);
 		}
@@ -53,15 +61,21 @@ export default class DataModel extends DataType {
 		this.setState({[name]: value});
 	}
 
-	onRef() {
+	onRef(ref) {
+		if (this.props.onRef !== null) {
+			this.props.onRef(ref);
+		}
 	}
 
-	onKeyUp() {
+	onKeyUp(event) {
+		if (this.props.onKeyUp !== null) {
+			this.props.onKeyUp(event);
+		}
 	}
 
 	render() {
 		const element = <DataModel {...this.props}>{this.props.children}</DataModel>;
-		return this.props.mapFunc(element, this.getValue, this.setValue, {onKeyUp: event => this.onKeyUp(event)}, [], ref => this.onRef(ref));
+		return this.props.mapFunc(element, this.getValue, this.setValue, {onKeyUp: this.onKeyUp}, [], this.onRef);
 	}
 
 }

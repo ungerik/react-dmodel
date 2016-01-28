@@ -155,10 +155,13 @@ export default class Slider extends React.Component {
 			const width = slidingWidth / ((max - min) / tickSpacing);
 			for (let v = min; v <= max; v += tickSpacing) {
 				const left = halfSliderWidth - width * 0.5 + valueToX(v);
+				if (isFinite(labelDecimals)) {
+					v = v.toFixed(labelDecimals);
+				}
 				const div = (
 					<div key={"val" + v} style={{...labelWrapperStyle, left, width}}>
 						<div style={tickStyle}></div>
-						<div>{isFinite(labelDecimals) ? v.toFixed(labelDecimals) : v}{unit}</div>
+						<div>{v}{unit}</div>
 					</div>
 				);
 				labels.push(div);

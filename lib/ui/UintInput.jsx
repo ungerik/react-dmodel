@@ -49,10 +49,22 @@ export default class UintInput extends React.Component {
 		wrapperClass: null,
 	};
 
+	constructor(...args) {
+		super(...args);
+		this.onChange = this.onChange.bind(this);
+		this.onKeyUp = this.onKeyUp.bind(this);
+	}
+
 	onChange(event) {
 		// TODO: handle value not in range of min max. Neets temporary state
 		if (this.props.onChange) {
 			this.props.onChange(atoi(event.target.value));
+		}
+	}
+
+	onKeyUp(event) {
+		if (this.props.onKeyUp !== null) {
+			this.props.onKeyUp(event);
 		}
 	}
 
@@ -71,8 +83,8 @@ export default class UintInput extends React.Component {
 				pattern="[0-9]*"
 				title={`Input must be a non-negative integral number from ${this.props.min} to ${this.props.max}`}
 				disabled={this.props.disabled}
-				onChange={event => this.onChange(event)}
-				onKeyUp={event => this.props.onKeyUp ? this.props.onKeyUp(event) : undefined}
+				onChange={this.onChange}
+				onKeyUp={this.onKeyUp}
 			/>
 		);
 	}

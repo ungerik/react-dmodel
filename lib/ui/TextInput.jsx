@@ -10,6 +10,12 @@ export default class TextInput extends React.Component {
 	static defaultProps = {
 	};
 
+	constructor(...args) {
+		super(...args);
+		this.onChange = this.onChange.bind(this);
+		this.onKeyUp = this.onKeyUp.bind(this);
+	}
+
 	state = {
 	};
 
