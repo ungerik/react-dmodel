@@ -12,6 +12,7 @@ export default class UintInput extends BaseUintInput {
 		min: PropTypes.number,
 		max: PropTypes.number,
 		label: PropTypes.string,
+		placeholder: PropTypes.string,
 		addonAfter: PropTypes.string,
 		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
 		disabled: PropTypes.bool,
@@ -27,6 +28,7 @@ export default class UintInput extends BaseUintInput {
 		min: 0,
 		max: Number.MAX_SAFE_INTEGER,
 		label: null,
+		placeholder: null,
 		addonAfter: null,
 		bsStyle: null,
 		disabled: false,
@@ -36,15 +38,22 @@ export default class UintInput extends BaseUintInput {
 	};
 
 	render() {
-		const groupClass = "form-group" + (this.props.bsStyle ? " has-" + this.props.bsStyle : "");
+		let groupClass = "form-group";
+		if (this.props.bsStyle) {
+			groupClass += " has-" + this.props.bsStyle;
+		}
 		const { label, addonAfter } = this.props;
 		return (
 			<div className={groupClass}>
 				{label ? <label className="control-label">{label}</label> : null}
-				<div className="input-group">
-					{super.renderInput()}
-					{addonAfter ? <span className="input-group-addon">{addonAfter}</span> : null}
-				</div>
+				{addonAfter ?
+					<div className="input-group">
+						{super.renderInput()}
+						<span className="input-group-addon">{addonAfter}</span>
+					</div>
+				:
+					super.renderInput()
+				}
 			</div>
 		);
 	}

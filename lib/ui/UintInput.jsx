@@ -22,8 +22,7 @@ export default class UintInput extends React.Component {
 		min: PropTypes.number,
 		max: PropTypes.number,
 		label: PropTypes.string,
-		addonAfter: PropTypes.string,
-		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
+		placeholder: PropTypes.string,
 		disabled: PropTypes.bool,
 		onChange: PropTypes.func,
 		onKeyUp: PropTypes.func,
@@ -39,8 +38,7 @@ export default class UintInput extends React.Component {
 		min: 0,
 		max: Number.MAX_SAFE_INTEGER,
 		label: null,
-		addonAfter: null,
-		bsStyle: null,
+		placeholder: null,
 		disabled: false,
 		onChange: null,
 		onKeyUp: null,
@@ -71,11 +69,12 @@ export default class UintInput extends React.Component {
 	renderInput() {
 		return (
 			<input
-				className={this.props.inputClass}
-				type="number"
 				ref="input"
+				type="number"
+				className={this.props.inputClass}
 				value={itoa(this.props.value)}
 				label={this.props.label}
+				placeholder={this.props.placeholder}
 				size={this.props.size}
 				min={Math.max(this.props.min, 0)}
 				max={Math.max(this.props.max, 0)}

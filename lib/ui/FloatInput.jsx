@@ -61,8 +61,7 @@ export default class FloatInput extends React.Component {
 		max: PropTypes.number,
 		decimals: PropTypes.number,
 		label: PropTypes.string,
-		addonAfter: PropTypes.string,
-		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
+		placeholder: PropTypes.string,
 		disabled: PropTypes.bool,
 		onChange: PropTypes.func,
 		onKeyUp: PropTypes.func,
@@ -79,8 +78,7 @@ export default class FloatInput extends React.Component {
 		max: +Number.MAX_VALUE,
 		decimals: 3,
 		label: null,
-		addonAfter: null,
-		bsStyle: null,
+		placeholder: null,
 		disabled: false,
 		onChange: null,
 		onKeyUp: null,
@@ -147,15 +145,16 @@ export default class FloatInput extends React.Component {
 		// }
 		return (
 			<input
-				className={this.props.inputClass}
-				type="number"
 				ref="input"
+				type="number"
+				className={this.props.inputClass}
 				size={this.props.size}
 				value={value}
 				min={this.props.min}
 				max={this.props.max}
 				step={Math.pow(10, -this.props.decimals)}
 				label={this.props.label}
+				placeholder={this.props.placeholder}
 				inputMode="numeric"
 				pattern="[\-\d\.]*"
 				title="Input must be a valid floating-point number"
