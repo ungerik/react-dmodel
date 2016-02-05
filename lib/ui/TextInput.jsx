@@ -53,20 +53,35 @@ export default class TextInput extends React.Component {
 	}
 
 	renderInput() {
-		return (
-			<input
-				ref="input"
-				type={this.props.multiLine ? "textarea" : "text"}
-				className={this.props.inputClass}
-				value={this.props.value}
-				label={this.props.label}
-				placeholder={this.props.placeholder}
-				size={this.props.size}
-				disabled={this.props.disabled}
-				onChange={this.onChange}
-				onKeyUp={this.onKeyUp}
-			/>
-		);
+		if (this.props.multiLine) {
+			return (
+				<textarea
+					ref="input"
+					className={this.props.inputClass}
+					value={this.props.value}
+					label={this.props.label}
+					placeholder={this.props.placeholder}
+					disabled={this.props.disabled}
+					onChange={this.onChange}
+					onKeyUp={this.onKeyUp}
+				/>
+			);
+		} else {
+			return (
+				<input
+					ref="input"
+					type="text"
+					className={this.props.inputClass}
+					value={this.props.value}
+					label={this.props.label}
+					placeholder={this.props.placeholder}
+					size={this.props.size}
+					disabled={this.props.disabled}
+					onChange={this.onChange}
+					onKeyUp={this.onKeyUp}
+				/>
+			);
+		}
 	}
 
 	render() {

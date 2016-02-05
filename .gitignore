@@ -27,4 +27,4 @@ build/Release
 
 node_modules
 bower_components
-hot_debug
+example/hot-debug
