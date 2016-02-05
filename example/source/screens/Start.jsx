@@ -7,6 +7,7 @@ import Float from "react-dmodel/lib/Float";
 import Text from "react-dmodel/lib/Text";
 import Group from "react-dmodel/lib/Group";
 import DataModel from "react-dmodel/lib/DataModel";
+import Enum from "react-dmodel/lib/Enum";
 
 
 const dm = (
@@ -23,9 +24,12 @@ export default class Start extends React.Component {
 
 	state = {
 		showFormModal: false,
-		showFormModal2: false,
+		showFormModalSimple: false,
 
-		data: {
+		dataSimple: {},
+
+		dataComplex: {
+			enum: "two",
 			text: "Hallo World!",
 			multiLineText: "Line 1\nLine 2",
 			intPercent: 0,
@@ -40,21 +44,23 @@ export default class Start extends React.Component {
 
 		return (
 			<div>
-				<h2>github.com/ungerik/react-dmodel</h2>
-				<br/>
-				<Button bsStyle="primary" onClick={() => this.setState({showFormModal: true})}>Show FormModal</Button>
-				&nbsp;
-				<Button bsStyle="primary" onClick={() => this.setState({showFormModal2: true})}>Show FormModal 2</Button>
-				<br/><br/>
-				<pre style={{fontSize: "20px"}}>{JSON.stringify(this.state.data, null, 2)}</pre>
+				<FormModal
+					title="Simple FormModal"
+					show={this.state.showFormModalSimple}
+					data={this.state.dataSimple}
+					onCancel={() => this.setState({showFormModalSimple: false})}
+					onSave={dataSimple => this.setState({dataSimple, showFormModalSimple: false})}
+					showValidationErrors
+				>
+					<Int name="int2" label="Int [-10..+10]" defaultValue={0} min={-10} max={10}/>
+				</FormModal>
 
 				<FormModal
-					title="Title"
+					title="Complex FormModal"
 					show={this.state.showFormModal}
-					data={this.state.data}
+					data={this.state.dataComplex}
 					onCancel={() => this.setState({showFormModal: false})}
-					onSave={data => this.setState({data, showFormModal: false})}
-					showValidationErrors
+					onSave={dataComplex => this.setState({dataComplex, showFormModal: false})}
 				>
 					<ul>
 						<li>My own markup</li>
@@ -67,19 +73,20 @@ export default class Start extends React.Component {
 						<Int name="int" label="Int [1000..2000]" min={1000} max={2000} unit="kg"/>
 						<Float name="sliderValue" label="Slider for float value" min={0} max={10} style={{slider: {width: 200, tickSpacing: 2, snapToTicks: true}}}/>
 						<Float name="float" label="Float" decimals={2}/>
+						<Enum name="enum" options={["one", "two", "tree", "four"]}/>
 					</Group>
 				</FormModal>
 
-				<FormModal
-					title="Title"
-					show={this.state.showFormModal2}
-					data={this.state.data}
-					onCancel={() => this.setState({showFormModal2: false})}
-					onSave={data => this.setState({data, showFormModal2: false})}
-					showValidationErrors
-				>
-					<Int name="int2" label="Int [-10..+10]" defaultValue={0} min={-10} max={10}/>
-				</FormModal>
+
+				<h2>github.com/ungerik/react-dmodel</h2>
+				<br/>
+				<Button bsStyle="primary" onClick={() => this.setState({showFormModalSimple: true})}>Simple FormModal</Button>
+				<br/><br/>
+				<pre style={{fontSize: "20px"}}>{JSON.stringify(this.state.dataSimple, null, 2)}</pre>
+				<br/><br/>
+				<Button bsStyle="primary" onClick={() => this.setState({showFormModal: true})}>Complex FormModal</Button>
+				<br/><br/>
+				<pre style={{fontSize: "20px"}}>{JSON.stringify(this.state.dataComplex, null, 2)}</pre>
 			</div>
 		);
 	}
