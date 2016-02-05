@@ -8,7 +8,7 @@ export default class TextInput extends BaseTextInput {
 	static propTypes = {
 		size: PropTypes.number,
 		// maxLength: PropTypes.number,
-		value: PropTypes.number,
+		value: PropTypes.string,
 		multiLine: PropTypes.bool,
 		label: PropTypes.string,
 		placeholder: PropTypes.string,

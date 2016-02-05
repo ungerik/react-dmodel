@@ -46,7 +46,8 @@
   },
   "peerDependencies": {
     "react-bootstrap": "^0.28.1",
-    "react": ">=0.14.6"
+    "react": ">=0.14.6",
+	"react-dom": ">=0.14.6"
   },
   "jest": {
     "testFileExtensions": [
