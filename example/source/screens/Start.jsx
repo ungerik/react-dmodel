@@ -10,7 +10,7 @@ import DataModel from "react-dmodel/lib/DataModel";
 import Enum from "react-dmodel/lib/Enum";
 
 
-const dm = (
+const myDataModel = (
 	<DataModel>
 		<Int name="Int"/>
 		<Float name="Float"/>
@@ -23,8 +23,8 @@ export default class Start extends React.Component {
 	static displayName = "Start";
 
 	state = {
-		showFormModal: false,
 		showFormModalSimple: false,
+		showFormModalComplex: false,
 
 		dataSimple: {},
 
@@ -40,7 +40,7 @@ export default class Start extends React.Component {
 	};
 
 	render() {
-		console.log(dm);
+		console.log(myDataModel);
 
 		return (
 			<div>
@@ -57,10 +57,10 @@ export default class Start extends React.Component {
 
 				<FormModal
 					title="Complex FormModal"
-					show={this.state.showFormModal}
+					show={this.state.showFormModalComplex}
 					data={this.state.dataComplex}
-					onCancel={() => this.setState({showFormModal: false})}
-					onSave={dataComplex => this.setState({dataComplex, showFormModal: false})}
+					onCancel={() => this.setState({showFormModalComplex: false})}
+					onSave={dataComplex => this.setState({dataComplex, showFormModalComplex: false})}
 				>
 					<ul>
 						<li>My own markup</li>
@@ -84,7 +84,7 @@ export default class Start extends React.Component {
 				<br/><br/>
 				<pre style={{fontSize: "20px"}}>{JSON.stringify(this.state.dataSimple, null, 2)}</pre>
 				<br/><br/>
-				<Button bsStyle="primary" onClick={() => this.setState({showFormModal: true})}>Complex FormModal</Button>
+				<Button bsStyle="primary" onClick={() => this.setState({showFormModalComplex: true})}>Complex FormModal</Button>
 				<br/><br/>
 				<pre style={{fontSize: "20px"}}>{JSON.stringify(this.state.dataComplex, null, 2)}</pre>
 			</div>
