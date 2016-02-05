@@ -97,7 +97,7 @@ export default class FormModal extends DataModel {
 	}
 
 	onRef(ref) {
-		if (!ref || !ref.refs || this.inputRefMap.has(ref.refs.input)) {
+		if (!ref || !ref.refs || !ref.refs.input || this.inputRefMap.has(ref.refs.input)) {
 			// Ignore null or refs we already have
 			return;
 		}
@@ -142,7 +142,7 @@ export default class FormModal extends DataModel {
 		const validationError = this.validate();
 		return (
 			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={noop}>
-				{title ? <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header> : null}				
+				{title ? <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header> : null}
 				<Modal.Body>
 					{mappedChildren}
 					{showValidationErrors && validationError ? <Alert bsStyle="danger">{validationError.toString()}</Alert> : null}
