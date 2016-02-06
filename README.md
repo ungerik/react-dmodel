@@ -9,6 +9,7 @@ JSX is a handy format to define structured data within Javascript. react-dmodel 
 
 * [ ] Validation error for every input in FormModal instead of global
 * [ ] Deep nesting, fix forEachChildElementRecursive
+* [ ] Publish npm package
 * [ ] Support arrays
 * [ ] Immutable.js compatibility
 * [ ] Redux integration
