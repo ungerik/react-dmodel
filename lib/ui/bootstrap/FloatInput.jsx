@@ -6,48 +6,29 @@ export default class FloatInput extends BaseFloatInput {
 	static displayName = "FloatInput";
 
 	static propTypes = {
-		size: PropTypes.number,
-		// maxLength: PropTypes.number,
-		value: PropTypes.number,
-		min: PropTypes.number,
-		max: PropTypes.number,
-		decimals: PropTypes.number,
-		label: PropTypes.string,
-		placeholder: PropTypes.string,
+		...BaseFloatInput.propTypes,
 		addonAfter: PropTypes.string,
 		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
-		disabled: PropTypes.bool,
-		onChange: PropTypes.func,
-		onKeyUp: PropTypes.func,
-		inputClass: PropTypes.string,
 	};
 
 	static defaultProps = {
-		size: null,
-		// maxLength: null,
-		value: NaN,
-		min: -Number.MAX_VALUE,
-		max: +Number.MAX_VALUE,
-		decimals: 3,
-		label: null,
-		placeholder: null,
+		...BaseFloatInput.defaultProps,
+		wrapperClass: "form-group",
+		labelClass: "control-label",
+		inputClass: "form-control",
 		addonAfter: null,
 		bsStyle: null,
-		disabled: false,
-		onChange: null,
-		onKeyUp: null,
-		inputClass: "form-control",
 	};
 
 	render() {
-		let groupClass = "form-group";
-		if (this.props.bsStyle) {
-			groupClass += " has-" + this.props.bsStyle;
+		const { label, addonAfter, bsStyle } = this.props;
+		let groupClass = this.props.wrapperClass;
+		if (bsStyle) {
+			groupClass += " has-" + bsStyle;
 		}
-		const { label, addonAfter } = this.props;
 		return (
 			<div className={groupClass}>
-				{label ? <label className="control-label">{label}</label> : null}
+				{label ? <label className={this.props.labelClass}>{label}</label> : null}
 				{addonAfter ?
 					<div className="input-group">
 						{super.renderInput()}

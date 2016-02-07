@@ -5,6 +5,7 @@ export default class TextInput extends React.Component {
 	static displayName = "TextInput";
 
 	static propTypes = {
+		style: PropTypes.object,
 		size: PropTypes.number,
 		// maxLength: PropTypes.number,
 		value: PropTypes.string,
@@ -20,6 +21,7 @@ export default class TextInput extends React.Component {
 	};
 
 	static defaultProps = {
+		style: null,
 		size: null,
 		// maxLength: null,
 		value: NaN,
@@ -56,6 +58,7 @@ export default class TextInput extends React.Component {
 		if (this.props.multiLine) {
 			return (
 				<textarea
+					style={this.props.style}
 					ref="input"
 					className={this.props.inputClass}
 					value={this.props.value}
@@ -69,6 +72,7 @@ export default class TextInput extends React.Component {
 		} else {
 			return (
 				<input
+					style={this.props.style}
 					ref="input"
 					type="text"
 					className={this.props.inputClass}

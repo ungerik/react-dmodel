@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import dmodelPropTypes from "../PropTypes";
 
 
 function fixDecimals(s, decimals) {
@@ -37,16 +38,16 @@ function fixFloatString(s, decimals) {
 }
 
 
-function ftoa(f, decimals) {
-	if (isNaN(f)) {
+function ftoa(f, decimals, emptyValue) {
+	if (f === emptyValue || !Number.isFinite(f)) {
 		return "";
 	}
 	return fixDecimals(`${f}`, decimals);
 }
 
 
-function atof(a, decimals) {
-	return parseFloat(fixFloatString(a, decimals));
+function atof(a, decimals, emptyValue) {
+	return a.length === 0 ? emptyValue : parseFloat(fixFloatString(a, decimals));
 }
 
 
@@ -54,26 +55,28 @@ export default class FloatInput extends React.Component {
 	static displayName = "FloatInput";
 
 	static propTypes = {
+		style: PropTypes.object,
 		size: PropTypes.number,
-		// maxLength: PropTypes.number,
-		value: PropTypes.number,
+		value: dmodelPropTypes.numberOrNull,
+		emptyValue: PropTypes.any,
 		min: PropTypes.number,
 		max: PropTypes.number,
 		decimals: PropTypes.number,
 		label: PropTypes.string,
 		placeholder: PropTypes.string,
 		disabled: PropTypes.bool,
+		wrapperClass: PropTypes.string,
+		labelClass: PropTypes.string,
+		inputClass: PropTypes.string,
 		onChange: PropTypes.func,
 		onKeyUp: PropTypes.func,
-		inputClass: PropTypes.string,
-		labelClass: PropTypes.string,
-		wrapperClass: PropTypes.string,
 	};
 
 	static defaultProps = {
+		style: null,
 		size: null,
-		// maxLength: null,
-		value: NaN,
+		value: null,
+		emptyValue: null,
 		min: -Number.MAX_VALUE,
 		max: +Number.MAX_VALUE,
 		decimals: 3,
@@ -82,9 +85,9 @@ export default class FloatInput extends React.Component {
 		disabled: false,
 		onChange: null,
 		onKeyUp: null,
-		inputClass: null,
-		labelClass: null,
 		wrapperClass: null,
+		labelClass: null,
+		inputClass: null,
 	};
 
 	trailingPoint = false;
@@ -97,6 +100,8 @@ export default class FloatInput extends React.Component {
 	}
 
 	onChange(event) {
+		const { min, max, decimals, onChange } = this.props;
+
 		const s = event.target.value;
 		const p = s.lastIndexOf(".");
 		if (p === -1) {
@@ -110,18 +115,18 @@ export default class FloatInput extends React.Component {
 			this.trailingPoint = s.length - 1 - this.trailingZeros === p;
 		}
 
-		let value = atof(s, this.props.decimals);
-		if (value > this.props.max || value < this.props.min) {
+		let value = atof(s, decimals);
+		if (value > max || value < min) {
 			// If new value is outside of min max range
 			// ignore the input and use old value:
 			value = this.props.value;
 			// Just to make sure in case the old value was outside of range:
-			value = Math.min(this.props.max, value);
-			value = Math.max(this.props.min, value);
+			value = Math.min(max, value);
+			value = Math.max(min, value);
 		}
 
-		if (this.props.onChange) {
-			this.props.onChange(value);
+		if (onChange) {
+			onChange(value);
 		}
 	}
 
@@ -132,19 +137,22 @@ export default class FloatInput extends React.Component {
 	}
 
 	renderInput() {
-		let value = ftoa(this.props.value, this.props.decimals);
+		const { decimals, emptyValue } = this.props;
+
+		let value = ftoa(this.props.value, decimals, emptyValue);
 		if (this.trailingPoint) {
 			value += ".";
 		}
 		for (let i = 0; i < this.trailingZeros; i++) {
 			value += "0";
 		}
-		value = fixDecimals(value, this.props.decimals);
+		value = fixDecimals(value, decimals);
 		// if (this.props.maxLength && value.length > this.props.maxLength) {
 		// 	value = value.substring(0, this.props.maxLength);
 		// }
 		return (
 			<input
+				style={this.props.style}
 				ref="input"
 				type="number"
 				className={this.props.inputClass}
@@ -152,7 +160,7 @@ export default class FloatInput extends React.Component {
 				value={value}
 				min={this.props.min}
 				max={this.props.max}
-				step={Math.pow(10, -this.props.decimals)}
+				step={Math.pow(10, -decimals)}
 				label={this.props.label}
 				placeholder={this.props.placeholder}
 				inputMode="numeric"

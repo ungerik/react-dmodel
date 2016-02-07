@@ -1,13 +1,15 @@
 import React, { PropTypes } from "react";
+import dmodelPropTypes from "../PropTypes";
 
 
-function itoa(i) {
-	return isNaN(i) ? "" : `${Math.floor(i)}`;
+function itoa(i, emptyValue) {
+	return Number.isInteger(i) && i !== emptyValue ? i : "";
 }
 
 
-function atoi(a) {
-	return parseInt(a);
+function atoi(a, emptyValue) {
+	const i = parseInt(a);
+	return Number.isInteger(i) ? i : emptyValue;
 }
 
 
@@ -15,7 +17,10 @@ export default class IntInput extends React.Component {
 	static displayName = "IntInput";
 
 	static propTypes = {
-		value: PropTypes.number,
+		style: PropTypes.object,
+		size: PropTypes.number,
+		value: dmodelPropTypes.numberOrNull,
+		emptyValue: PropTypes.any,
 		min: PropTypes.number,
 		max: PropTypes.number,
 		label: PropTypes.string,
@@ -29,7 +34,9 @@ export default class IntInput extends React.Component {
 	};
 
 	static defaultProps = {
-		value: NaN,
+		style: null,
+		value: null,
+		emptyValue: null,
 		min: 0,
 		max: Number.MAX_SAFE_INTEGER,
 		label: null,
@@ -50,8 +57,10 @@ export default class IntInput extends React.Component {
 
 	onChange(event) {
 		// TODO: handle value not in range of min max. Neets temporary state
-		if (this.props.onChange) {
-			this.props.onChange(atoi(event.target.value));
+		const { onChange } = this.props;
+		if (onChange) {
+			const value = atoi(event.target.value, this.props.emptyValue);
+			onChange(value);
 		}
 	}
 
@@ -62,19 +71,23 @@ export default class IntInput extends React.Component {
 	}
 
 	renderInput() {
+		const { min, max } = this.props;
+		const value = itoa(this.props.value, this.props.emptyValue);
 		return (
 			<input
+				style={this.props.style}
 				ref="input"
 				type="number"
 				className={this.props.inputClass}
-				value={itoa(this.props.value)}
+				value={value}
 				label={this.props.label}
 				placeholder={this.props.placeholder}
-				min={this.props.min}
-				max={this.props.max}
+				size={this.props.size}
+				min={min}
+				max={max}
 				inputMode="numeric"
 				pattern="[\-\d]*"
-				title={`Input must be a non-negative integral number from ${this.props.min} to ${this.props.max}`}
+				title={`Input must be a non-negative integral number from ${min} to ${max}`}
 				disabled={this.props.disabled}
 				onChange={this.onChange}
 				onKeyUp={this.onKeyUp}
