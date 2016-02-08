@@ -43,14 +43,19 @@ export default class TextInput extends React.Component {
 	}
 
 	onChange(event) {
-		if (this.props.onChange !== null) {
-			this.props.onChange(event.target.value);
+		const { onChange } = this.props;
+		if (onChange !== null) {
+			onChange(event.target.value);
 		}
 	}
 
 	onKeyUp(event) {
-		if (this.props.onKeyUp !== null) {
-			this.props.onKeyUp(event);
+		const { onKeyUp, multiLine } = this.props;
+		if (multiLine && event.keyCode === 13) {
+			return;
+		}
+		if (onKeyUp !== null) {
+			onKeyUp(event);
 		}
 	}
 

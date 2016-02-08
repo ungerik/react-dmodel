@@ -65,8 +65,9 @@ export default class IntInput extends React.Component {
 	}
 
 	onKeyUp(event) {
-		if (this.props.onKeyUp !== null) {
-			this.props.onKeyUp(event);
+		const { onKeyUp } = this.props;
+		if (onKeyUp !== null) {
+			onKeyUp(event);
 		}
 	}
 
