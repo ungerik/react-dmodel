@@ -28,6 +28,7 @@ export default class FormModal extends DataModel {
 		style: React.PropTypes.object,
 		focusFirstInput: PropTypes.bool,
 		showValidationErrors: PropTypes.bool,
+		readOnly: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -41,6 +42,7 @@ export default class FormModal extends DataModel {
 		style: {},
 		focusFirstInput: true,
 		showValidationErrors: false,
+		readOnly: false,
 	};
 
 	inputRefArray = [];
@@ -137,9 +139,10 @@ export default class FormModal extends DataModel {
 
 	render() {
 		const { bsSize, dialogClassName, show, showValidationErrors } = this.props;
-		const { title, cancelText, saveText } = this.props;
+		const { title, cancelText, saveText, readOnly } = this.props;
 		const mappedChildren = super.render();
 		const validationError = this.validate();
+		// TODO pass readOnly on to children
 		return (
 			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={noop}>
 				{title ? <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header> : null}
@@ -149,7 +152,7 @@ export default class FormModal extends DataModel {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={this.onCancel}>{cancelText}</Button>
-					<Button bsStyle="primary" disabled={validationError !== null} onClick={this.onSave}>{saveText}</Button>
+					{readOnly ? null : <Button bsStyle="primary" disabled={validationError !== null} onClick={this.onSave}>{saveText}</Button>}
 				</Modal.Footer>
 			</Modal>
 		);
