@@ -12,6 +12,7 @@ export default class Enum extends DataType {
 		options: React.PropTypes.arrayOf(React.PropTypes.any).isRequired,
 		optionsPrefix: React.PropTypes.string,
 		optionsPostfix: React.PropTypes.string,
+		defaultValue: React.PropTypes.any,
 		required: React.PropTypes.bool,
 		style: React.PropTypes.object,
 	};
@@ -20,6 +21,7 @@ export default class Enum extends DataType {
 		label: null,
 		optionsPrefix: "",
 		optionsPostfix: "",
+		defaultValue: null,
 		required: false,
 		style: {},
 	};
@@ -31,5 +33,9 @@ export default class Enum extends DataType {
 			}
 		}
 		return new Error("Value not found in enum options: " + value);
+	}
+
+	static dynamicDefaultValue(props) {
+		return props.defaultValue !== null ? props.defaultValue : props.options[0];
 	}
 }
