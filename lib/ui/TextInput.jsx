@@ -24,7 +24,7 @@ export default class TextInput extends React.Component {
 		style: null,
 		size: null,
 		// maxLength: null,
-		value: NaN,
+		value: "",
 		multiLine: false,
 		label: null,
 		placeholder: null,

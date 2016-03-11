@@ -23,7 +23,7 @@ export default class TextInput extends BaseTextInput {
 	static defaultProps = {
 		size: null,
 		// maxLength: null,
-		value: NaN,
+		value: "",
 		multiLine: PropTypes.bool,
 		label: null,
 		placeholder: null,
