@@ -7,6 +7,7 @@ export default class BitField extends DataType {
 	static dataModelType = "BitField";
 
 	static propTypes = {
+		children: React.PropTypes.element, // optional custom component to render the data, will receive following props from parent DataModel.props.mapFunc: {...{getValue, setValue, parents, refCallback, key}, ...extraProps}
 		name: React.PropTypes.string.isRequired,
 		label: React.PropTypes.string,
 		style: React.PropTypes.object,
@@ -17,7 +18,7 @@ export default class BitField extends DataType {
 		style: {},
 	};
 
-	static validate(value, props) {
+	static validate(/*value, props*/) {
 		return null;
 	}
 }

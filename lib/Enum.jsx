@@ -7,6 +7,7 @@ export default class Enum extends DataType {
 	static dataModelType = "Enum";
 
 	static propTypes = {
+		children: React.PropTypes.element, // optional custom component to render the data, will receive following props from parent DataModel.props.mapFunc: {...{getValue, setValue, parents, refCallback, key}, ...extraProps}
 		name: React.PropTypes.string.isRequired,
 		label: React.PropTypes.string,
 		options: React.PropTypes.arrayOf(React.PropTypes.any).isRequired,

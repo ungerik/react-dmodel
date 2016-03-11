@@ -8,6 +8,7 @@ export default class Uint extends DataType {
 	static dataModelType = "Uint";
 
 	static propTypes = {
+		children: React.PropTypes.element, // optional custom component to render the data, will receive following props from parent DataModel.props.mapFunc: {...{getValue, setValue, parents, refCallback, key}, ...extraProps}
 		name: React.PropTypes.string.isRequired,
 		label: React.PropTypes.string,
 		unit: React.PropTypes.string,
