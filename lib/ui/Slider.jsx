@@ -26,6 +26,7 @@ export default class Slider extends React.Component {
 		sliderColor: React.PropTypes.string,
 		backgroundColor: React.PropTypes.string,
 		onChange: React.PropTypes.func,
+		fixed: React.PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -44,7 +45,8 @@ export default class Slider extends React.Component {
 		unit: "",
 		sliderColor: "#337ab7",
 		backgroundColor: "#F0F0F0",
-		onChange: null
+		onChange: null,
+		fixed: false,
 	};
 
 	state = {
@@ -53,6 +55,10 @@ export default class Slider extends React.Component {
 	}
 
 	componentDidMount() {
+		if (this.props.fixed) {
+			return;
+		}
+
 		const wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
 		const slider = ReactDOM.findDOMNode(this.refs.slider);
 		interact(slider)
@@ -149,7 +155,7 @@ export default class Slider extends React.Component {
 			margin: `0 auto ${tickMargin}px`,
 		};
 
-		var labels = null;
+		let labels = null;
 		if (ticks) {
 			labels = [];
 			const width = slidingWidth / ((max - min) / tickSpacing);

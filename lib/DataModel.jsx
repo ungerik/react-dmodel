@@ -12,12 +12,14 @@ export default class DataModel extends DataType {
 		children: React.PropTypes.node,
 		data: React.PropTypes.object,
 		mapFunc: React.PropTypes.func,
+		readOnly: React.PropTypes.bool, // if true, then the setValue parameter of props.mapFunc will be null
 		style: React.PropTypes.object,
 		onRef: React.PropTypes.func,
 		onKeyUp: React.PropTypes.func,
 	};
 
 	static defaultProps = {
+		readOnly: false,
 		style: {},
 		onRef: null,
 		onKeyUp: null,
@@ -75,7 +77,7 @@ export default class DataModel extends DataType {
 
 	render() {
 		const element = <DataModel {...this.props}>{this.props.children}</DataModel>;
-		return this.props.mapFunc(element, this.getValue, this.setValue, {onKeyUp: this.onKeyUp}, [], this.onRef);
+		return this.props.mapFunc(element, this.getValue, this.props.readOnly ? null : this.setValue, {onKeyUp: this.onKeyUp}, [], this.onRef);
 	}
 
 }

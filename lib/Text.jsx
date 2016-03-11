@@ -8,7 +8,7 @@ export default class Text extends DataType {
 	static dataModelType = "Text";
 
 	static propTypes = {
-		children: React.PropTypes.element, // optional custom component to render the data, will receive following props from parent DataModel.props.mapFunc: {...{getValue, setValue, parents, refCallback, key}, ...extraProps}
+		children: React.PropTypes.element, // optional custom component to render the data, will receive following props from parent DataModel.props.mapFunc: {...props, ...extraProps, ...{getValue, setValue, parents, refCallback, key}}
 		name: React.PropTypes.string.isRequired,
 		label: React.PropTypes.string,
 		defaultValue: React.PropTypes.string,

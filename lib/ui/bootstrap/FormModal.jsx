@@ -142,7 +142,6 @@ export default class FormModal extends DataModel {
 		const { title, cancelText, saveText, readOnly } = this.props;
 		const mappedChildren = super.render();
 		const validationError = this.validate();
-		// TODO pass readOnly on to children
 		return (
 			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={noop}>
 				{title ? <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header> : null}

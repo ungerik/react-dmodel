@@ -8,7 +8,7 @@ export default class Int extends DataType {
 	static dataModelType = "Int";
 
 	static propTypes = {
-		children: React.PropTypes.element, // optional custom component to render the data, will receive following props from parent DataModel.props.mapFunc: {...{getValue, setValue, parents, refCallback, key}, ...extraProps}
+		children: React.PropTypes.element, // optional custom component to render the data, will receive following props from parent DataModel.props.mapFunc: {...props, ...extraProps, ...{getValue, setValue, parents, refCallback, key}}
 		name: React.PropTypes.string.isRequired,
 		label: React.PropTypes.string,
 		unit: React.PropTypes.string,
