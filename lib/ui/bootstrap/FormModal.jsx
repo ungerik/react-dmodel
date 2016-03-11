@@ -138,7 +138,11 @@ export default class FormModal extends DataModel {
 	}
 
 	render() {
-		const { bsSize, dialogClassName, show, showValidationErrors } = this.props;
+		const { show } = this.props;
+		if (!show) {
+			return null;
+		}
+		const { bsSize, dialogClassName, showValidationErrors } = this.props;
 		const { title, cancelText, saveText, readOnly } = this.props;
 		const mappedChildren = super.render();
 		const validationError = this.validate();
