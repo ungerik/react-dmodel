@@ -46,8 +46,9 @@
   },
   "peerDependencies": {
     "react-bootstrap": "^0.28.1",
+    "react-toggle": "^2.0.1",
     "react": ">=0.14.6",
-	"react-dom": ">=0.14.6"
+    "react-dom": ">=0.14.6"
   },
   "jest": {
     "testFileExtensions": [
@@ -68,5 +69,7 @@
       "<rootDir>/node_modules/react-addons-test-utils"
     ],
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+  },
+  "dependencies": {
   }
 }
