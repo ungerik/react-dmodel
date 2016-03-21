@@ -53,6 +53,13 @@ const checkmarkLabelStyle = {
 };
 
 
+// Disable bootstrap label styles:
+const labelStyle = {
+	display: "inline",
+	margin: 0,
+	fontWeight: "normal",
+};
+
 
 export default function Checkbox({checked, disabled, onChange, children}) {
 	if (disabled) {
@@ -67,7 +74,14 @@ export default function Checkbox({checked, disabled, onChange, children}) {
 			<div style={checkmarkKickStyle}></div>
 		</span>
 	);
-	return children ? <div onClick={onChange} style={checkmarkLabelStyle}>{box}&nbsp;&nbsp;<label>{children}</label></div> : box;
+	if (!children) {
+		return box;
+	}
+	return (
+		<div onClick={onChange} style={checkmarkLabelStyle}>
+			{box}&nbsp;&nbsp;<label style={labelStyle}>{children}</label>
+		</div>
+	);
 }
 
 Checkbox.displayName = "Checkbox";
