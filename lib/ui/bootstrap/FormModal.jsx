@@ -27,6 +27,8 @@ export default class FormModal extends DataModel {
 		mapFunc: PropTypes.func,
 		style: React.PropTypes.object,
 		focusFirstInput: PropTypes.bool,
+		onFocus: PropTypes.func,
+		onBlur: PropTypes.func,
 		showValidationErrors: PropTypes.bool,
 		readOnly: PropTypes.bool,
 	};
@@ -41,6 +43,8 @@ export default class FormModal extends DataModel {
 		mapFunc: mapDefault,
 		style: {},
 		focusFirstInput: true,
+		onFocus: null,
+		onBlur: null,
 		showValidationErrors: false,
 		readOnly: false,
 	};
@@ -143,11 +147,18 @@ export default class FormModal extends DataModel {
 			return null;
 		}
 		const { bsSize, dialogClassName, showValidationErrors } = this.props;
-		const { title, cancelText, saveText, readOnly } = this.props;
+		const { title, cancelText, saveText, readOnly, onFocus, onBlur } = this.props;
 		const mappedChildren = super.render();
 		const validationError = this.validate();
 		return (
-			<Modal bsSize={bsSize} dialogClassName={dialogClassName} show={show} onHide={noop}>
+			<Modal
+				bsSize={bsSize}
+				dialogClassName={dialogClassName}
+				show={show}
+				onHide={noop}
+				onFocus={onFocus}
+				onBlur={onBlur}
+			>
 				{title ? <Modal.Header><Modal.Title>{title}</Modal.Title></Modal.Header> : null}
 				<Modal.Body>
 					{mappedChildren}
