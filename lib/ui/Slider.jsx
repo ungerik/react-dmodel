@@ -55,11 +55,6 @@ export default class Slider extends React.Component {
 		fixed: false,
 	};
 
-	// state = {
-	// 	dragging: false,
-	// 	dragValue: 0,
-	// }
-
 	valueFromDragEvent(event) {
 		const { width, height, min, max, value, integer, tickSpacing, snapToTicks } = this.props;
 		const sliderWidth = height * 0.5;
@@ -107,7 +102,6 @@ export default class Slider extends React.Component {
 				slider.style.transform = "";
 
 				const newValue = this.valueFromDragEvent(event);
-				// console.log("newValue", newValue);
 
 				if (this.props.onDragStop) {
 					this.props.onDragStop(newValue);
