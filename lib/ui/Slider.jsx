@@ -26,6 +26,9 @@ export default class Slider extends React.Component {
 		sliderColor: React.PropTypes.string,
 		backgroundColor: React.PropTypes.string,
 		onChange: React.PropTypes.func,
+		onDragStart: React.PropTypes.func,
+		onDragMove: React.PropTypes.func,
+		onDragStop: React.PropTypes.func,
 		fixed: React.PropTypes.bool,
 	};
 
@@ -46,12 +49,32 @@ export default class Slider extends React.Component {
 		sliderColor: "#337ab7",
 		backgroundColor: "#F0F0F0",
 		onChange: null,
+		onDragStart: null,
+		onDragMove: null,
+		onDragStop: null,
 		fixed: false,
 	};
 
-	state = {
-		dragging: false,
-		dragValue: 0,
+	// state = {
+	// 	dragging: false,
+	// 	dragValue: 0,
+	// }
+
+	valueFromDragEvent(event) {
+		const { width, height, min, max, value, integer, tickSpacing, snapToTicks } = this.props;
+		const sliderWidth = height * 0.5;
+		const slidingWidth = width - sliderWidth;
+		const dx = event.clientX - event.clientX0;
+		const lastValue = isNaN(value) ? min : value;
+		let newValue = lastValue + dx / slidingWidth * (max - min);
+		if (snapToTicks) {
+			newValue = Math.round((newValue - min) / tickSpacing) * tickSpacing + min;
+		} else if (integer) {
+			newValue = Math.round(newValue);
+		}
+		newValue = Math.min(max, newValue);
+		newValue = Math.max(min, newValue);
+		return newValue;
 	}
 
 	componentDidMount() {
@@ -68,32 +91,29 @@ export default class Slider extends React.Component {
 					elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
 				}
 			})
-			// .on("dragstart", () => {
-			// 	console.log("dragstart");
-			// })
+			.on("dragstart", () => {
+				if (this.props.onDragStart) {
+					this.props.onDragStart(this.props.value);
+				}
+			})
 			.on("dragmove", event => {
 				const dx = event.clientX - event.clientX0;
-				// console.log("dx", dx);
 				slider.style.transform = `translateX(${dx}px)`;
+				if (this.props.onDragMove) {
+					this.props.onDragMove(this.valueFromDragEvent(event));
+				}
 			})
 			.on("dragend", event => {
 				slider.style.transform = "";
-				const { width, height, min, max, value, integer, tickSpacing, snapToTicks, onChange } = this.props;
-				const sliderWidth = height * 0.5;
-				const slidingWidth = width - sliderWidth;
-				const dx = event.clientX - event.clientX0;
-				const lastValue = isNaN(value) ? min : value;
-				let newValue = lastValue + dx / slidingWidth * (max - min);
-				if (snapToTicks) {
-					newValue = Math.round((newValue - min) / tickSpacing) * tickSpacing + min;
-				} else if (integer) {
-					newValue = Math.round(newValue);
-				}
-				newValue = Math.min(max, newValue);
-				newValue = Math.max(min, newValue);
+
+				const newValue = this.valueFromDragEvent(event);
 				// console.log("newValue", newValue);
-				if (onChange) {
-					onChange(newValue);
+
+				if (this.props.onDragStop) {
+					this.props.onDragStop(newValue);
+				}
+				if (this.props.onChange) {
+					this.props.onChange(newValue);
 				}
 			});
 	}
