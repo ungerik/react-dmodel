@@ -45,10 +45,11 @@
     "webpack": "^1.12.9"
   },
   "peerDependencies": {
-    "react-bootstrap": "^0.28.1",
+    "react-bootstrap": ">=0.28.1",
     "react-toggle": "2.0.1",
     "react": ">=0.14.6",
-    "react-dom": ">=0.14.6"
+    "react-dom": ">=0.14.6",
+	"interact.js": "^1.2.6"
   },
   "jest": {
     "testFileExtensions": [
@@ -71,6 +72,5 @@
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
   },
   "dependencies": {
-    "interact.js": "^1.2.6"
   }
 }
