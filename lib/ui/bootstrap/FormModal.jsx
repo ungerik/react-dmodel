@@ -56,6 +56,12 @@ export default class FormModal extends DataModel {
 		// We can't use this to pass methods to parent props
 		// so create functions that close over injectedProps
 		// and set the methods of injectedProps after the constructor
+
+		// TODO fix this to get rid of warning:
+		// Warning: Unknown props `show`, `onHide`, `backdrop`, `keyboard`, `enforceFocus`, `dialogComponentClass`, `dialogClassName` on <div> tag. Remove these props from the element. For details, see https://fb.me/react-unknown-prop
+		//     in div (created by ModalDialog)
+		//     in ModalDialog (created by Modal)
+
 		const injectedProps = {
 			onRef: null,
 			onKeyUp: null,
