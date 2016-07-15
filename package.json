@@ -1,6 +1,6 @@
 {
   "name": "react-dmodel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Exploit JSX syntax to define data models and auto generate form UI for it",
   "main": "lib/index.js",
   "directories": {
@@ -49,7 +49,7 @@
     "react-toggle": "2.0.1",
     "react": ">=0.14.6",
     "react-dom": ">=0.14.6",
-	"interact.js": "^1.2.6"
+    "interact.js": "^1.2.6"
   },
   "jest": {
     "testFileExtensions": [
@@ -71,6 +71,5 @@
     ],
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
