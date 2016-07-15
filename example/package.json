@@ -1,6 +1,6 @@
 {
   "name": "react-dmodel-example",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "react-dmodel-example",
   "author": "Erik Unger <erik@erikunger.com>",
   "repository": "ungerik/react-dmodel/example",
@@ -42,6 +42,7 @@
     "webpack": "^1.12.10",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-dev-server": "^1.14.0",
-    "webpack-hot-middleware": "^2.5.0"
+    "webpack-hot-middleware": "^2.5.0",
+	"interact.js": "^1.2.6"
   }
 }

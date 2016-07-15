@@ -20,7 +20,7 @@ function debugWebapackConfig(outputPath, makeConfigFunc) {
 	config.addLib("react-router");
 	config.addLib("react-router-bootstrap");
 	config.addLib("core-decorators");
-	config.addLib("interact", "bower_components/interact/dist/interact.js");
+	config.addLib("interact.js", "node_modules/interact.js/dist/interact.js");
 	config.addLibES6("react-dmodel");
 
 	return config;
@@ -47,7 +47,7 @@ function releaseWebapackConfig(outputPath, makeConfigFunc) {
 	config.addLib("react-router");
 	config.addLib("react-router-bootstrap");
 	config.addLib("core-decorators");
-	config.addLib("interact", "bower_components/interact/dist/interact.min.js");
+	config.addLib("interact.js", "node_modules/interact.js/dist/interact.min.js");
 	config.addLibES6("react-dmodel");
 
 	return config;

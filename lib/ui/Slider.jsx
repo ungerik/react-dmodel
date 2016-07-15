@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import interact from "interact";
+import interact from "interact.js";
 
 import dmodelPropTypes from "../PropTypes";
 

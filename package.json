@@ -46,7 +46,7 @@
   },
   "peerDependencies": {
     "react-bootstrap": "^0.28.1",
-    "react-toggle": "^2.0.1",
+    "react-toggle": "2.0.1",
     "react": ">=0.14.6",
     "react-dom": ">=0.14.6"
   },
@@ -70,5 +70,7 @@
     ],
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
   },
-  "dependencies": {}
+  "dependencies": {
+	  "interact.js": "^1.2.6"
+  }
 }
