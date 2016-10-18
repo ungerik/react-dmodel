@@ -1,6 +1,6 @@
 {
   "name": "react-dmodel",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Exploit JSX syntax to define data models and auto generate form UI for it",
   "main": "lib/index.js",
   "directories": {
