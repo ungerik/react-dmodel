@@ -137,7 +137,31 @@ export default class FloatInput extends React.Component {
 		}
 	}
 
-	renderInput() {
+	renderInput(value) {
+		return (
+			<input
+				style={this.props.style}
+				ref="input"
+				type="number"
+				className={this.props.inputClass}
+				size={this.props.size}
+				value={value}
+				min={this.props.min}
+				max={this.props.max}
+				step={Math.pow(10, -this.props.decimals)}
+				label={this.props.label}
+				placeholder={this.props.placeholder}
+				inputMode="numeric"
+				pattern="[\-\d\.]*"
+				title="Input must be a valid floating-point number"
+				disabled={this.props.disabled}
+				onChange={this.onChange}
+				onKeyUp={this.onKeyUp}
+			/>
+		);
+	}
+
+	valueForInput() {
 		const { decimals, emptyValue } = this.props;
 
 		let value = ftoa(this.props.value, decimals, emptyValue);
@@ -151,27 +175,8 @@ export default class FloatInput extends React.Component {
 		// if (this.props.maxLength && value.length > this.props.maxLength) {
 		// 	value = value.substring(0, this.props.maxLength);
 		// }
-		return (
-			<input
-				style={this.props.style}
-				ref="input"
-				type="number"
-				className={this.props.inputClass}
-				size={this.props.size}
-				value={value}
-				min={this.props.min}
-				max={this.props.max}
-				step={Math.pow(10, -decimals)}
-				label={this.props.label}
-				placeholder={this.props.placeholder}
-				inputMode="numeric"
-				pattern="[\-\d\.]*"
-				title="Input must be a valid floating-point number"
-				disabled={this.props.disabled}
-				onChange={this.onChange}
-				onKeyUp={this.onKeyUp}
-			/>
-		);
+
+		return value;
 	}
 
 	render() {
@@ -179,11 +184,11 @@ export default class FloatInput extends React.Component {
 			return (
 				<div className={this.props.wrapperClass}>
 					<label className={this.props.labelClass}>{this.props.label}</label>
-					{this.renderInput()}
+					{this.renderInput(this.valueForInput())}
 				</div>
 			);
 		} else {
-			return this.renderInput();
+			return this.renderInput(this.valueForInput());
 		}
 	}
 }
