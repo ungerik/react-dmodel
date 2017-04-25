@@ -83,12 +83,14 @@ export default class Slider extends React.PureComponent {
 			.draggable({
 				startAxis: "x",
 				lockAxis: "x",
+				preventDefault: "always",
 				restrict: {
 					restriction: wrapper,
 					elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
 				}
 			})
-			.on("dragstart", () => {
+			.on("dragstart", event => {
+				event.preventDefault();
 				if (this.props.onDragStart) {
 					this.props.onDragStart(this.props.value);
 				}
@@ -191,25 +193,25 @@ export default class Slider extends React.PureComponent {
 		}
 
 		const sliderBackgroundStyle = {
-			position: "relative", 
-			width: slidingWidth, 
-			height, 
-			left: halfSliderWidth, 
+			position: "relative",
+			width: slidingWidth,
+			height,
+			left: halfSliderWidth,
 			backgroundColor,
 		}
 
 		const sliderStyle = {
-			position: "absolute", 
-			zIndex: 1, 
-			top: 0, 
-			left: sliderX, 
-			height, 
-			cursor: "col-resize", 
-			touchAction: "pan-x",
+			position: "absolute",
+			zIndex: 1,
+			top: 0,
+			left: sliderX,
+			height,
+			cursor: "col-resize",
+			touchAction: "none",
 		}
 
 		return (
-			<div ref="wrapper" className="dmodel-slider-wrapper" style={{position: "relative", width, height: totalHeight}}>
+			<div ref="wrapper" className="dmodel-slider-wrapper" style={{position: "relative", width, height: totalHeight, touchAction: "none"}}>
 				<div className="dmodel-slider-background" style={sliderBackgroundStyle}></div>
 				<div ref="slider" className="dmodel-slider" style={sliderStyle}>
 					<div style={shaftStyle}></div>
