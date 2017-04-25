@@ -81,6 +81,8 @@ export default class Slider extends React.Component {
 		const slider = ReactDOM.findDOMNode(this.refs.slider);
 		interact(slider)
 			.draggable({
+				startAxis: "x",
+				lockAxis: "x",
 				restrict: {
 					restriction: wrapper,
 					elementRect: { top: 0, left: 0, bottom: 1, right: 1 },
@@ -188,10 +190,28 @@ export default class Slider extends React.Component {
 			}
 		}
 
+		const sliderBackgroundStyle = {
+			position: "relative", 
+			width: slidingWidth, 
+			height, 
+			left: halfSliderWidth, 
+			backgroundColor,
+		}
+
+		const sliderStyle = {
+			position: "absolute", 
+			zIndex: 1, 
+			top: 0, 
+			left: sliderX, 
+			height, 
+			cursor: "col-resize", 
+			touchAction: "pan-x",
+		}
+
 		return (
 			<div ref="wrapper" className="dmodel-slider-wrapper" style={{position: "relative", width, height: totalHeight}}>
-				<div className="dmodel-slider-background" style={{position: "relative", width: slidingWidth, height, left: halfSliderWidth, backgroundColor}}></div>
-				<div ref="slider" className="dmodel-slider" style={{position: "absolute", zIndex: 1, top: 0, left: sliderX, height, cursor: "col-resize"}}>
+				<div className="dmodel-slider-background" style={sliderBackgroundStyle}></div>
+				<div ref="slider" className="dmodel-slider" style={sliderStyle}>
 					<div style={shaftStyle}></div>
 					<div style={arrowStyle}></div>
 				</div>
