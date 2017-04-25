@@ -5,7 +5,7 @@ import interact from "interact.js";
 import dmodelPropTypes from "../PropTypes";
 
 
-export default class Slider extends React.Component {
+export default class Slider extends React.PureComponent {
 	static displayName = "Slider";
 
 	static propTypes = {
